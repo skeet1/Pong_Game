@@ -1,6 +1,6 @@
 "use client";
 import Rigor from "../app/assets//Rigor.png";
-import Avatar from "../app/assets/man-avatar-1632965.jpg";
+import Skeet from "../app/assets/man-avatar-1632965.jpg";
 import SendIcon from "../app/assets/send.png";
 import "../app/chat/styles/Chat.scss";
 import InputEmoji from "emoji-picker-react";
@@ -17,7 +17,7 @@ const ChatBox = ({user} : any) => {
       {/* {!user ?(<div className="No-message">
           <h1>Chose a convertation from the left or create a new chat</h1>
       </div>) : */}
-     (< UserMessages  senderAvatar={Rigor} recipientAvatar={Avatar}/>)
+     < UserMessages  senderAvatar={Skeet} recieverAvatar={Rigor}/>
     </div>
   );
 };

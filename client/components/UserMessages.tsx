@@ -2,21 +2,24 @@ import { ChangeEvent, FC, useState } from "react";
 import { BiWinkSmile } from "react-icons/bi";
 import SendIcon from "../app/assets/send.png";
 import { StaticImageData } from "next/image";
-import ChatBoxHeader from './ChatBoxHeader';
-import io from "socket.io-client"
+import ChatBoxHeader from "./ChatBoxHeader";
+import SenderMessage from "./SenderMessage";
+import skeet from "../app/assets/man-avatar-1632965.jpg";
+import io from "socket.io-client";
+import RecieverMessage from "./RecieverMessage";
 interface MessageProp {
   senderAvatar: StaticImageData;
-  recipientAvatar: StaticImageData;
+  recieverAvatar: StaticImageData;
 }
-const socket = io("http://localhost:5000");
+// const socket = io("http://localhost:5000");
 
-const UserMessages: FC<MessageProp> = ({ senderAvatar, recipientAvatar }) => {
+const UserMessages: FC<MessageProp> = ({ senderAvatar, recieverAvatar }) => {
   const [message, setMessage] = useState("");
-  
+
   function handleOnEnter(text: string) {
     console.log("enter", text);
   }
-  
+
   const Style = {
     position: "absolute",
     bottom: "0",
@@ -31,42 +34,82 @@ const UserMessages: FC<MessageProp> = ({ senderAvatar, recipientAvatar }) => {
     margin: "4% 5%",
     overflow: "hidden",
   };
-  
-  const handleSubmitMessage = () =>
-  {
-    socket.emit("message", {data : message})
-  }
 
-  socket.on('message', (data : any) => {
-    handleMessage(data);
-  })
+  // const handleSubmitMessage = () => {
+  //   socket.emit("message", { data: message });
+  // };
 
-  const handleMessage = (data : any) =>
-  {
+  // socket.on("message", (data: any) => {
+  //   handleMessage(data);
+  // });
+
+  const handleMessage = (data: any) => {
     // messag
-  }
+  };
 
-  const textSaver = (e: ChangeEvent ) => {
+  const textSaver = (e: ChangeEvent) => {
     console.log("im heree");
-    
+
     setMessage(e.target.value);
     console.log(message);
   };
 
   return (
-    <>  
-      <ChatBoxHeader username="rigor" status="in match" senderAvatar={senderAvatar} />
-       <div className="message-box">
-         <div className="ectangle-1"></div>
-         {/* {/ *  User right and left containers both placed here } */}
-        <div className="form-container"> 
-          <input type="text" placeholder="type you message... "  onChange={(e) => textSaver(e)} />
+    <>
+      <ChatBoxHeader
+        username="rigor"
+        status="in match"
+        senderAvatar={senderAvatar}
+      />
+      <div className="message-box">
+        <div className="message-holder">
+          <SenderMessage image={senderAvatar} text="hello Rigor" />
+          <RecieverMessage
+            image={recieverAvatar}
+            text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione laborum omnis adipisci aperiam voluptatibus aliquid placeat libero maxime velit modi tempore nihil nobis fugit officia facere exercitationem, distinctio fugiat vero?"
+          />
+          <RecieverMessage
+            image={recieverAvatar}
+            text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione laborum omnis adipisci aperiam voluptatibus aliquid placeat libero maxime velit modi tempore nihil nobis fugit officia facere exercitationem, distinctio fugiat vero?"
+          />
+          <RecieverMessage
+            image={recieverAvatar}
+            text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione laborum omnis adipisci aperiam voluptatibus aliquid placeat libero maxime velit modi tempore nihil nobis fugit officia facere exercitationem, distinctio fugiat vero?"
+          />
+          <SenderMessage image={senderAvatar} text="hello Rigor" />
+          <RecieverMessage
+            image={recieverAvatar}
+            text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione laborum omnis adipisci aperiam voluptatibus aliquid placeat libero maxime velit modi tempore nihil nobis fugit officia facere exercitationem, distinctio fugiat vero?"
+          />
+          <RecieverMessage
+            image={recieverAvatar}
+            text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione laborum omnis adipisci aperiam voluptatibus aliquid placeat libero maxime velit modi tempore nihil nobis fugit officia facere exercitationem, distinctio fugiat vero?"
+          />
+          <RecieverMessage
+            image={recieverAvatar}
+            text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione laborum omnis adipisci aperiam voluptatibus aliquid placeat libero maxime velit modi tempore nihil nobis fugit officia facere exercitationem, distinctio fugiat vero?"
+          />
+          <SenderMessage image={senderAvatar} text="hello Rigor" />
+          <SenderMessage image={senderAvatar} text="hello Rigor" />
+          <SenderMessage image={senderAvatar} text="hello Rigor" />
+          <SenderMessage image={senderAvatar} text="hello Rigor" />
+          <RecieverMessage
+            image={recieverAvatar}
+            text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione laborum omnis adipisci aperiam voluptatibus aliquid placeat libero maxime velit modi tempore nihil nobis fugit officia facere exercitationem, distinctio fugiat vero?"
+          />
+        </div>
+        <div className="form-container">
+          <input
+            type="text"
+            placeholder="type you message... "
+            onChange={(e) => textSaver(e)}
+          />
           <button
             className="send-conatainer"
             type="submit"
             onClick={() => console.log("text is =>" + message)}
-            >
-            <img src={SendIcon.src} alt="Send" /> 
+          >
+            <img src={SendIcon.src} alt="Send" />
           </button>
         </div>
       </div>
@@ -74,4 +117,4 @@ const UserMessages: FC<MessageProp> = ({ senderAvatar, recipientAvatar }) => {
   );
 };
 
-export default UserMessages;  
+export default UserMessages;

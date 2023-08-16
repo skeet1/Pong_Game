@@ -14,10 +14,9 @@ const Chat = () => {
         <div className="container-holder">
           <div className="left-side">
             <div className="second-wrapper">
-              {/* <MsgNotification number={2} /> */}
+              <MsgNotification number={2} />
             </div>
             <div className="messages">
-              {/* <Message />
               <Message />
               <Message />
               <Message />
@@ -26,7 +25,8 @@ const Chat = () => {
               <Message />
               <Message />
               <Message />
-              <Message /> */}
+              <Message />
+              <Message />
             </div>
           </div>
           <ChatBox user={null}/>
