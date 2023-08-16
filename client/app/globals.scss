@@ -7,7 +7,24 @@ $grd-second-color: #251C48; // for box gradient
 $main-text-color: #fff; // for text 
 $blue-bg-color: #4D4AC9; // some box need diff bg color
 $main-bg-color: #090227; // bg for body
+$bp : (
+//   mobile : 480px,
 
+  mobile : 400px,
+  tablet: 1268px,
+  desktop : 1440px,
+);
+
+
+@mixin query($display){
+    @each $key, $value in $bp{
+      
+      //  defining max-width
+      @if ($display == $key){
+        @media (max-width: $value){@content;}
+      }
+    }
+}
 /* Start Global Rules */
 * {
   margin: 0;
