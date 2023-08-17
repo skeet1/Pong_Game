@@ -14,14 +14,16 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChatGateway = void 0;
 const websockets_1 = require("@nestjs/websockets");
+const socket_io_1 = require("socket.io");
 let ChatGateway = exports.ChatGateway = class ChatGateway {
     handleMessage(message) {
+        console.log("in server", message);
         this.server.emit('message', message);
     }
 };
 __decorate([
     (0, websockets_1.WebSocketServer)(),
-    __metadata("design:type", Object)
+    __metadata("design:type", socket_io_1.Server)
 ], ChatGateway.prototype, "server", void 0);
 __decorate([
     (0, websockets_1.SubscribeMessage)('message'),

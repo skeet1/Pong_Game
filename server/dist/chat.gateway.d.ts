@@ -1,4 +1,5 @@
+import { Server } from "socket.io";
 export declare class ChatGateway {
-    server: any;
+    server: Server;
     handleMessage(message: string): void;
 }
