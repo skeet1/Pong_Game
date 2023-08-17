@@ -9,9 +9,6 @@ $main-font-family: "Poppins";
 @import '../../globals.scss';
 @import '../../../components/styles/HeaderContent.scss';
 
-
-
-
 * {
   scrollbar-width: thin;
   scrollbar-color: $main-send-button-color $main-input-color;
@@ -62,7 +59,7 @@ $main-font-family: "Poppins";
 {
   overflow-y: auto;
   height: 750px;
-  scroll-behavior: auto;
+  scroll-behavior:smooth;
 
 }
 .message-wrapper:hover{
@@ -70,6 +67,7 @@ $main-font-family: "Poppins";
 }
 
 .message-wrapper {
+  cursor: pointer;
   width: 270px;
   height: 105px;
   border-radius: 10px;

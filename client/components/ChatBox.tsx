@@ -6,18 +6,19 @@ import "../app/chat/styles/Chat.scss";
 import InputEmoji from "emoji-picker-react";
 import MessageBox from "./MessageBox";
 import { ChangeEvent, useState } from "react";
-import {BiWinkSmile} from "react-icons/bi"
+import { BiWinkSmile } from "react-icons/bi";
 import UserMessages from "./UserMessages";
 
-const ChatBox = ({user} : any) => {
-  
-
+const ChatBox = ({ user }: any) => {
   return (
     <div className="chatbox-container">
-      {/* {!user ?(<div className="No-message">
+      {user === "" ? (
+        <div className="No-message">
           <h1>Chose a convertation from the left or create a new chat</h1>
-      </div>) : */}
-     < UserMessages  senderAvatar={Skeet} recieverAvatar={Rigor}/>
+        </div>
+      ) : (
+        <UserMessages senderAvatar={Skeet} recieverAvatar={Rigor} />
+      )}
     </div>
   );
 };
