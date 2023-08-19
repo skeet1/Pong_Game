@@ -16,8 +16,17 @@ exports.ChatGateway = void 0;
 const websockets_1 = require("@nestjs/websockets");
 const socket_io_1 = require("socket.io");
 let ChatGateway = exports.ChatGateway = class ChatGateway {
+    constructor() {
+        this.users = 0;
+    }
+    handleDisconnect(client) {
+        console.log(`Client disconnected  id id ${client.id}`);
+    }
+    handleConnection(client) {
+        console.log(`Client connected id id ${client.id}`);
+    }
     handleMessage(message) {
-        console.log("in server", message);
+        console.log('in server', message);
         this.server.emit('message', message);
     }
 };

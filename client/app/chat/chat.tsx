@@ -6,7 +6,10 @@ import Search from "@/components/Search";
 import Message from "@/components/Message";
 import ChatBox from "@/components/ChatBox";
 import UserCardInfo from "@/components/UserCardInfo";
+import io from "socket.io-client";
 import { useCallback, useState } from "react";
+
+const socket = io("http://localhost:5000");
 
 const Chat = () => {
 
@@ -19,7 +22,6 @@ const Chat = () => {
   }
   return (
     <main>
-      {/* <HeaderContent Button="+ chat" /> */}
       <div className="chat-text">Chat</div>
         <div className="container-holder">
           <div className="left-side">
@@ -42,18 +44,10 @@ const Chat = () => {
             <div className="message-wrapper" onClick={onClickCard}>
               <Message />
             </div>
-              {/* <Message onClick={onClickCard}/>
-              <Message onClick={onClickCard}/>
-              <Message onClick={onClickCard}/>
-              <Message onClick={onClickCard}/>
-              <Message onClick={onClickCard}/>
-              <Message onClick={onClickCard}/>
-              <Message onClick={onClickCard}/>
-              <Message onClick={onClickCard}/>
-              <Message onClick={onClickCard}/> */}
+            {/* message conponenty */}
             </div>
           </div>
-          {slectedChat ? (<ChatBox user={"aaa"}/>) : (<ChatBox user={""}/>) }
+          {slectedChat ? (<ChatBox user={"aaa"} userSocket={socket}/>) : (<ChatBox user={""} userSocket={socket}/>) }
           
       </div>
     </main>

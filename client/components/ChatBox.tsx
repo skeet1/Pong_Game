@@ -8,8 +8,14 @@ import MessageBox from "./MessageBox";
 import { ChangeEvent, useState } from "react";
 import { BiWinkSmile } from "react-icons/bi";
 import UserMessages from "./UserMessages";
+import { Socket } from "socket.io-client";
 
-const ChatBox = ({ user }: any) => {
+interface chatboxProp 
+{
+  user: any,   
+  userSocket: Socket,
+}
+const ChatBox = ({ user, userSocket}: chatboxProp) => {
   return (
     <div className="chatbox-container">
       {user === "" ? (
@@ -17,7 +23,7 @@ const ChatBox = ({ user }: any) => {
           <h1>Chose a convertation from the left or create a new chat</h1>
         </div>
       ) : (
-        <UserMessages senderAvatar={Skeet} recieverAvatar={Rigor} />
+        <UserMessages senderAvatar={Skeet} recieverAvatar={Rigor} socket={userSocket} />
       )}
     </div>
   );

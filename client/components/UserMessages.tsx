@@ -1,55 +1,46 @@
-import { ChangeEvent, FC, useState } from "react";
+import { ChangeEvent, FC, useEffect, useState, useContext, FormEvent } from "react";
 import { BiWinkSmile } from "react-icons/bi";
 import SendIcon from "../app/assets/send.png";
 import { StaticImageData } from "next/image";
 import ChatBoxHeader from "./ChatBoxHeader";
 import SenderMessage from "./SenderMessage";
 import skeet from "../app/assets/man-avatar-1632965.jpg";
-import io from "socket.io-client";
+import io, { Socket } from "socket.io-client";
 import RecieverMessage from "./RecieverMessage";
 interface MessageProp {
   senderAvatar: StaticImageData;
   recieverAvatar: StaticImageData;
+  socket: Socket;
 }
 // const socket = io("http://localhost:5000");
 
-const UserMessages: FC<MessageProp> = ({ senderAvatar, recieverAvatar }) => {
-  const [message, setMessage] = useState("");
+const UserMessages: FC<MessageProp> = ({ senderAvatar, recieverAvatar, socket}) => {
+  const [message, setMessage] = useState(null);
+  const [messages, setMessages] = useState<any>([]);
+  const [Mounted, setMounted] = useState(false);
+
+  const subscribeMessage = (msg: any) => {
+    setMessages((prev: any) => [...prev, msg]); // Append the new message
+  };
 
   function handleOnEnter(text: string) {
     console.log("enter", text);
   }
 
-  const Style = {
-    position: "absolute",
-    bottom: "0",
-    left: "0",
-    resize: "none",
-    boxSizing: "border-box",
-    height: "auto",
-    width: "550px",
-    border: "1px solid #14003D",
-    borderRadius: "7px",
-    background: "#2C2C2C",
-    margin: "4% 5%",
-    overflow: "hidden",
+  const handleSubmitNewMessage = (e: SubmitEvent | FormEvent) => {
+    e.preventDefault();
+    console.log("in submit");
+
+    socket.emit("message", { data: message });
   };
 
-  // const handleSubmitMessage = () => {
-  //   socket.emit("message", { data: message });
-  // };
-
-  // socket.on("message", (data: any) => {
-  //   handleMessage(data);
-  // });
-
-  const handleMessage = (data: any) => {
-    // messag
-  };
+  useEffect(() => {
+    socket?.on("message", (data: any) => {
+      subscribeMessage(data);
+    });
+  }, []);
 
   const textSaver = (e: ChangeEvent) => {
-    console.log("im heree");
-
     setMessage(e.target.value);
     console.log(message);
   };
@@ -59,59 +50,29 @@ const UserMessages: FC<MessageProp> = ({ senderAvatar, recieverAvatar }) => {
       <ChatBoxHeader
         username="rigor"
         status="in match"
-        senderAvatar={senderAvatar}
+        senderAvatar={senderAvatar} 
       />
       <div className="message-box">
         <div className="message-holder">
-          <SenderMessage image={senderAvatar} text="hello Rigor" />
-          <RecieverMessage
-            image={recieverAvatar}
-            text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione laborum omnis adipisci aperiam voluptatibus aliquid placeat libero maxime velit modi tempore nihil nobis fugit officia facere exercitationem, distinctio fugiat vero?"
-          />
-          <RecieverMessage
-            image={recieverAvatar}
-            text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione laborum omnis adipisci aperiam voluptatibus aliquid placeat libero maxime velit modi tempore nihil nobis fugit officia facere exercitationem, distinctio fugiat vero?"
-          />
-          <RecieverMessage
-            image={recieverAvatar}
-            text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione laborum omnis adipisci aperiam voluptatibus aliquid placeat libero maxime velit modi tempore nihil nobis fugit officia facere exercitationem, distinctio fugiat vero?"
-          />
-          <SenderMessage image={senderAvatar} text="hello Rigor" />
-          <RecieverMessage
-            image={recieverAvatar}
-            text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione laborum omnis adipisci aperiam voluptatibus aliquid placeat libero maxime velit modi tempore nihil nobis fugit officia facere exercitationem, distinctio fugiat vero?"
-          />
-          <RecieverMessage
-            image={recieverAvatar}
-            text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione laborum omnis adipisci aperiam voluptatibus aliquid placeat libero maxime velit modi tempore nihil nobis fugit officia facere exercitationem, distinctio fugiat vero?"
-          />
-          <RecieverMessage
-            image={recieverAvatar}
-            text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione laborum omnis adipisci aperiam voluptatibus aliquid placeat libero maxime velit modi tempore nihil nobis fugit officia facere exercitationem, distinctio fugiat vero?"
-          />
-          <SenderMessage image={senderAvatar} text="hello Rigor" />
-          <SenderMessage image={senderAvatar} text="hello Rigor" />
-          <SenderMessage image={senderAvatar} text="hello Rigor" />
-          <SenderMessage image={senderAvatar} text="hello Rigor" />
-          <RecieverMessage
-            image={recieverAvatar}
-            text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione laborum omnis adipisci aperiam voluptatibus aliquid placeat libero maxime velit modi tempore nihil nobis fugit officia facere exercitationem, distinctio fugiat vero?"
-          />
+          {messages.map((msg: any, index: number) => (
+            <SenderMessage key={index} image={senderAvatar} text={msg.data} />
+          ))}
         </div>
-        <div className="form-container">
+        <form className="form-container" onSubmit={(e) => handleSubmitNewMessage(e)}>
           <input
             type="text"
             placeholder="type you message... "
-            onChange={(e) => textSaver(e)}
+            onChange={(e) => textSaver(e)
+            }
           />
           <button
             className="send-conatainer"
             type="submit"
-            onClick={() => console.log("text is =>" + message)}
+            onClick={(e) => handleSubmitNewMessage(e)}
           >
             <img src={SendIcon.src} alt="Send" />
           </button>
-        </div>
+        </form>
       </div>
     </>
   );

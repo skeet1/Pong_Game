@@ -1,0 +1,36 @@
+<div className="message-holder">
+          <SenderMessage image={senderAvatar} text="hello Rigor" />
+          <RecieverMessage
+            image={recieverAvatar}
+            text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione laborum omnis adipisci aperiam voluptatibus aliquid placeat libero maxime velit modi tempore nihil nobis fugit officia facere exercitationem, distinctio fugiat vero?"
+          />
+          <RecieverMessage
+            image={recieverAvatar}
+            text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione laborum omnis adipisci aperiam voluptatibus aliquid placeat libero maxime velit modi tempore nihil nobis fugit officia facere exercitationem, distinctio fugiat vero?"
+          />
+          <RecieverMessage
+            image={recieverAvatar}
+            text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione laborum omnis adipisci aperiam voluptatibus aliquid placeat libero maxime velit modi tempore nihil nobis fugit officia facere exercitationem, distinctio fugiat vero?"
+          />
+          <SenderMessage image={senderAvatar} text="hello Rigor" />
+          <RecieverMessage
+            image={recieverAvatar}
+            text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione laborum omnis adipisci aperiam voluptatibus aliquid placeat libero maxime velit modi tempore nihil nobis fugit officia facere exercitationem, distinctio fugiat vero?"
+          />
+          <RecieverMessage
+            image={recieverAvatar}
+            text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione laborum omnis adipisci aperiam voluptatibus aliquid placeat libero maxime velit modi tempore nihil nobis fugit officia facere exercitationem, distinctio fugiat vero?"
+          />
+          <RecieverMessage
+            image={recieverAvatar}
+            text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione laborum omnis adipisci aperiam voluptatibus aliquid placeat libero maxime velit modi tempore nihil nobis fugit officia facere exercitationem, distinctio fugiat vero?"
+          />
+          <SenderMessage image={senderAvatar} text="hello Rigor" />
+          <SenderMessage image={senderAvatar} text="hello Rigor" />
+          <SenderMessage image={senderAvatar} text="hello Rigor" />
+          <SenderMessage image={senderAvatar} text="hello Rigor" />
+          <RecieverMessage
+            image={recieverAvatar}
+            text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione laborum omnis adipisci aperiam voluptatibus aliquid placeat libero maxime velit modi tempore nihil nobis fugit officia facere exercitationem, distinctio fugiat vero?"
+          />
+        </div>
