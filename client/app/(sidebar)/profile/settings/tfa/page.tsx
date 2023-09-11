@@ -4,7 +4,7 @@ import './style.scss';
 
 export default function TfaPage() {
   useEffect(() =>{
-    
+
   })
   return (
     <div className="tfa-page">
