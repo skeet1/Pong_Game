@@ -12,6 +12,8 @@ export default function TfaPage() {
   const [error, setError] = useState<boolean>(false);
   const [code, setCode] = useState<string>('')
   const [errorMsg, setErrorMsg] = useState<string>('');
+  const [successMsg, setSuccessMsg] = useState<string>('');
+  const [success, setSuccess] = useState<boolean>(false);
 
   useEffect(() =>{
     (async () =>
@@ -34,6 +36,7 @@ export default function TfaPage() {
         setErrorMsg(response.message);
         console.log(error);
         console.log(errorMsg);
+        return false;
       }
       return true;
     }
@@ -65,10 +68,16 @@ export default function TfaPage() {
     {
       e.preventDefault();
       setError(false);
+      setSuccess(false);
+      setSuccessMsg("");
       if (!inputVerify())
         return ;
       setErrorMsg("");
-      await codeVerifitacion(code);
+      if (await codeVerifitacion(code))
+      {
+        setSuccess(true);
+        setSuccessMsg("successfully authenticated");
+      }
     }
 
   return (
@@ -90,6 +99,7 @@ export default function TfaPage() {
         </div>
         <button type='submit' className='capitalize' onClick={handleEnbaleClick} >enable</button>
         {error ?  (<p className="error" >{errorMsg} </p>) : ""}
+        {success ? (<p className="success" >{successMsg}</p>) : ""}
       </div>
     </div>
   )

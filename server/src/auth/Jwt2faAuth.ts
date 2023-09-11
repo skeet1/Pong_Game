@@ -5,7 +5,7 @@ import { UserService } from 'src/user/user.service';
 import { AuthService } from './auth.service';
 
 @Injectable()
-export class Jwt2faStrategy extends PassportStrategy(Strategy, 'jwt-2fa') {
+export class Jwt2faStrategy extends PassportStrategy(Strategy, 'jwt-two-factor') {
   // eslint-disable-next-line prettier/prettier
   constructor(private readonly userService: UserService, private readonly authService: AuthService) {
     super({
@@ -16,6 +16,7 @@ export class Jwt2faStrategy extends PassportStrategy(Strategy, 'jwt-2fa') {
 
   async validate(payload: any) {
     const user = await this.userService.findUserById(payload.id);
+    console.log(user);
 
     if (!user.tfa) {
       return user;
