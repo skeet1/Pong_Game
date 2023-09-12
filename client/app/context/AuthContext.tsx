@@ -13,42 +13,66 @@ export const AuthProvider = ({ children }: {
 }) => {
 
     const [user, setUser] = useState<User>(userInit);
+    const [tfaDisabled, setTfaDisabled] = useState(true);
     const [loginError, setLoginError] = useState<LoginError>();
     const router = useRouter();
-    const [cookie, setCookie] = useCookies(['access_token']);
+    const [cookie, setCookie , remove] = useCookies(['access_token']);
     const [currentWindow, setCurrentWindow] = useState("");
+    const[pathname, setPathname] = useState<string>('');
 
-    // useEffect(() =>{
-    //     if (cookie.access_token === '' || !cookie.access_token) 
-    //         router.replace("/login");
-    //     },[cookie.access_token, router])
+
+    const Urls = {
+        home: "",
+        gameHistory: "game-history",
+        instructions: "instructions",
+        aboutUs: "about-us",
+        login: "login",
+        tfaLogin :"tfalogin",
+    };
+
+
+    useEffect(() =>{
+        if (cookie.access_token === '' || !cookie.access_token) 
+            router.replace("/login");
+        },[])
+const  checkPath = () =>{
+        setPathname('') ;
+        const currentPath = window.location.href.split("/");
+        if (currentPath[4] && currentPath[4] === Urls.tfaLogin)
+              return false;
+        if (currentPath[3] === Urls.home || currentPath[3] === Urls.gameHistory ||
+            currentPath[3] === Urls.instructions ||
+            currentPath[3] === Urls.aboutUs || (currentPath[3] === Urls.login && !currentPath[4]))
+                return false;
+    return true;
+}
 
     const fetchUserData = async () => {
         const response = await getRequest(`${baseUrlUsers}/user`)
         if (response.error) {
             setLoginError(response);
-            router.replace("/login");
             return false;
         }
-        // console.log("response", response);
-
         setUser(response);
     };
 
     useEffect(() => {
-        (async () => {
+        if (!checkPath())
+            return ;
+    (async () => {
             const response = await getRequest(`${baseUrlUsers}/user`)
             if (response.error) {
                 setLoginError(response);
+                remove('access_token');
+                router.push("/login");
                 return false;
             }
-            // console.log("response", response);
-
+            response.tfa === false ? setTfaDisabled(true): setTfaDisabled(false);
             setUser(response);
             return true;
         })();
     }, []);
-     
+
 
     const updatingInfos = useCallback(async  (username : string, password: string ) => {
 
@@ -66,13 +90,12 @@ export const AuthProvider = ({ children }: {
 
 
     const updateUserInfo = useCallback(async  (body: any) =>
-    {   
+    {
         const response = await putRequest(`${baseUrlUsers}/users/update`, JSON.stringify(body))
         if (response.error) {
             setLoginError(response);
             return false;
         }
-        // console.log("response", response);
         setUser(response);
         return true;
     }, [])
@@ -91,22 +114,26 @@ export const AuthProvider = ({ children }: {
         return true;
     }, []);
 
-    const HandleClickUpdate = useCallback(async (UpdateInfo: any) => 
+    const handleDisable2fa = async () =>
+  {
+    const response =  await putRequest(`${baseUrlUsers}/user/disable2fa`, "");
+    setTfaDisabled(true);
+    console.log(response);
+  }
+    const HandleClickUpdate = useCallback(async (UpdateInfo: any) =>
     {
         setLoginError(LoginErrorInit);
         const response = await putRequest(`${baseUrlUsers}/users/update`, UpdateInfo);
 
         if (response.error) {
-            setLoginError(response);
             return false;
         }
         console.log("Updated Succefully!!");
-        
         return true;
     },[])
 
     return (
-        <AuthContext.Provider value={{ user: user, loginError: loginError, LogIn, updatingInfos, updateUserInfo}}>
+        <AuthContext.Provider value={{ user: user, loginError: loginError, LogIn, updatingInfos, updateUserInfo, tfaDisabled, handleDisable2fa}}>
             {children}
         </AuthContext.Provider>
     );
