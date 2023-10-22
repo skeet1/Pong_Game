@@ -59,8 +59,8 @@ class Ball {
   constructor() {
       this.x = 0;
       this.y = 0;
-      this.addx = 1;
-      this.addy = 1;
+      this.addx = 2;
+      this.addy = 2;
       this.width = 10;
   }
 };
@@ -97,11 +97,11 @@ class bar {
   length: number;
 
   constructor() {
-      this.x = 0;
-      this.y = 0;
-      this.starty = 0;
-      this.width = 0;
-      this.length = 0;
+    this.x = 0;
+    this.y = 0;
+    this.starty = 0;
+    this.width = 0;
+    this.length = 0;
   }
 }
 
@@ -193,6 +193,7 @@ function updateballxy(match: Match): string {
   }
   match.ball.x = match.ball.x + match.ball.addx;
   match.ball.y = match.ball.y + match.ball.addy;
+  console.log(match.ball.addx, match.ball.addx);
   return 'ok'
 }
 catch(e){
@@ -235,7 +236,7 @@ export class GameGateway {
           tmplayer.avatar = currentUser.avatar;
           tmplayer.userid = currentUser.id;
           tmplayer.socket = client;
-          console.log(`User connected to game gateway with ID: ${socketId}`)
+          console.log(`User connected to game33 gateway with ID: ${socketId}`)
           // console.log(this.waiting_users.getByUserId(tmplayer.userid));
           if(this.waiting_users.getByUserId(tmplayer.userid) != undefined)
           {
