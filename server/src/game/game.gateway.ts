@@ -59,8 +59,8 @@ class Ball {
   constructor() {
       this.x = 0;
       this.y = 0;
-      this.addx = 2;
-      this.addy = 2;
+      this.addx = 1;
+      this.addy = 1;
       this.width = 10;
   }
 };
@@ -193,7 +193,7 @@ function updateballxy(match: Match): string {
   }
   match.ball.x = match.ball.x + match.ball.addx;
   match.ball.y = match.ball.y + match.ball.addy;
-  console.log(match.ball.addx, match.ball.addx);
+
   return 'ok'
 }
 catch(e){
